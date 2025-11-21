@@ -56,14 +56,13 @@ const Appointments = () => {
 
     setSubmitting(true)
     try {
-      const dateTime = new Date(`${formData.date}T${formData.time}`)
-      const newAppointment = await api.createAppointment({
-        ...formData,
-        date: dateTime.toISOString(),
-      })
+      // Send date and time as separate fields — server will build the ISO timestamp
+      const newAppointment = await api.createAppointment({ ...formData })
       setAppointments([newAppointment, ...appointments])
       setFormData({ patientId: '', date: '', time: '', reason: '' })
       setFormOpen(false)
+      // Notify other parts of the app (Dashboard) to refresh live data
+      try { window.dispatchEvent(new CustomEvent('data-updated', { detail: { type: 'appointments' } })) } catch (e) {}
       showToast('Appointment created successfully', 'success')
     } catch (err) {
       if (err.response?.status === 409) {

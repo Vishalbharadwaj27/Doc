@@ -31,7 +31,7 @@ Open your browser to **http://localhost:3000** and you're ready to go!
 ## ✨ Try These First
 
 ### Create Your First Patient
-1. Click the **➕ Add Patient** button (bottom-right)
+1. Click the **➕ Add Patient** button in the header
 2. Fill in: Name, Age, Gender
 3. Optionally add domains and contact info
 4. Click **Create**
@@ -68,7 +68,6 @@ Open your browser to **http://localhost:3000** and you're ready to go!
 |---------|----------|-----|
 | **Dark Mode** | Top-right of header | Click 🌙 icon |
 | **Search** | Topbar | Type patient name |
-| **Voice Add** | Bottom-right | Click 🎤 FAB |
 | **Keyboard Shortcuts** | Anywhere | Press `?` |
 | **PDF Export** | Patient detail | Click export button |
 | **Backup Data** | Settings | Download JSON file |

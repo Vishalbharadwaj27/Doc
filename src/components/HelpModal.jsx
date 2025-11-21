@@ -58,21 +58,13 @@ const HelpModal = ({ isOpen, onClose }) => {
       title: '⌨️ Quick Keyboard Shortcuts',
       content: [
         'Ctrl+K (Cmd+K on Mac) - Open search',
-        'N - New patient (on Patients page)',
+        'Ctrl/Cmd+N - New patient',
         '? - Toggle this help menu',
         'M - Toggle sidebar on mobile',
         'D - Toggle dark mode'
       ]
     },
-    {
-      title: '🎤 Voice Quick Add',
-      content: [
-        'Click the microphone icon in bottom-right',
-        'Speak clearly for 5-30 seconds',
-        'Your voice will be converted to text',
-        'Create a quick note or reminder'
-      ]
-    },
+    // Voice quick add has been removed
     {
       title: '📌 Pinned Patients',
       content: [

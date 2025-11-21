@@ -83,6 +83,7 @@ const PatientDetail = () => {
       setNotes([noteData, ...notes])
       setNewNoteText('')
       showToast('Note added successfully', 'success')
+      try { window.dispatchEvent(new CustomEvent('data-updated', { detail: { type: 'notes' } })) } catch (e) {}
     } catch (err) {
       showToast('Failed to add note', 'error')
     }

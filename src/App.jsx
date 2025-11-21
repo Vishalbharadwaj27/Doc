@@ -114,18 +114,23 @@ const App = () => {
   // Keyboard shortcuts
   useEffect(() => {
     const handleKeyPress = (e) => {
+      // Ignore shortcuts when typing in inputs or editable regions
+      const tag = e.target && e.target.tagName
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || e.target.isContentEditable) return
+
       if (e.ctrlKey || e.metaKey) {
         if (e.key === 'k') {
           e.preventDefault()
           // Focus search would go here
         }
+        // Ctrl/Cmd+N opens Add Patient
+        if (e.key === 'n') {
+          e.preventDefault()
+          setAddPatientOpen(true)
+        }
       }
 
-      // N key opens add patient modal from anywhere
-      if (e.key === 'n' && !e.ctrlKey && !e.metaKey) {
-        setAddPatientOpen(true)
-      }
-
+      // '?' toggles help (explicit key, allow without modifiers)
       if (e.key === '?') {
         e.preventDefault()
         setHelpOpen((prev) => !prev)

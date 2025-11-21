@@ -38,6 +38,7 @@ const Notes = () => {
     setNewNoteText('')
     setNewNoteTags('')
     showToast('Note added successfully', 'success')
+    try { window.dispatchEvent(new CustomEvent('data-updated', { detail: { type: 'notes' } })) } catch (e) {}
   }
 
   const handleDeleteNote = (id) => {
@@ -45,6 +46,7 @@ const Notes = () => {
     setNotes(updated)
     localStorage.setItem('globalNotes', JSON.stringify(updated))
     showToast('Note deleted', 'success')
+    try { window.dispatchEvent(new CustomEvent('data-updated', { detail: { type: 'notes' } })) } catch (e) {}
   }
 
   return (

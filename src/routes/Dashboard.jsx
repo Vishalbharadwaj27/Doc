@@ -20,6 +20,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     loadData()
+    // Listen for cross-app updates (appointments, notes, patients)
+    const onDataUpdated = () => {
+      loadData()
+    }
+    window.addEventListener('data-updated', onDataUpdated)
+    return () => window.removeEventListener('data-updated', onDataUpdated)
   }, [])
 
   const loadData = async () => {
@@ -39,9 +45,18 @@ const Dashboard = () => {
           const notes = await api.getNotes(patient.id)
           totalNotes += Array.isArray(notes) ? notes.length : (notes.data || []).length
         }
-      } catch (err) {
+      }
+      catch (err) {
         // If notes fail to load, just continue with 0 notes
         console.warn('Failed to load notes count:', err)
+      }
+
+      // Include global notes created in the Notes page (localStorage)
+      try {
+        const globalNotes = JSON.parse(localStorage.getItem('globalNotes') || '[]')
+        totalNotes += Array.isArray(globalNotes) ? globalNotes.length : 0
+      } catch (err) {
+        // ignore parsing errors
       }
 
       setStats({

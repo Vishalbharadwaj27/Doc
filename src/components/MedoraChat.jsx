@@ -92,16 +92,27 @@ const MedoraChat = ({ patients = [], appointments = [] }) => {
           };
           setMessages(prev => [...prev, botMessage]);
         } catch (apiError) {
-          // Graceful error handling
+          // Graceful error handling with actionable messages
+          const msgText = (apiError && apiError.message) || 'Medora AI could not respond right now.';
+
+          let userFriendly = "Medora AI couldn't respond right now. Please try again.";
+          if (/api key|openrouter api key|not configured|PASTE_YOUR_KEY_HERE/i.test(msgText)) {
+            userFriendly = "Medora AI API key is not configured. Set `VITE_OPENROUTER_API_KEY` in your .env (see src/config/keys.js) and restart the dev server.";
+          } else if (/unauthorized|401|forbidden/i.test(msgText)) {
+            userFriendly = "Medora AI returned an authorization error — check your API key and permissions.";
+          } else if (/timeout|abort/i.test(msgText)) {
+            userFriendly = "Medora AI request timed out. Please try again.";
+          }
+
           const errorMessage = {
             id: Date.now(),
             type: 'bot',
-            content: "Medora AI couldn't respond right now. Please try again.",
+            content: userFriendly,
             timestamp: new Date(),
             isError: true
           };
           setMessages(prev => [...prev, errorMessage]);
-          setError("API temporarily unavailable");
+          setError(msgText);
         }
       }
     } catch (err) {
@@ -113,7 +124,7 @@ const MedoraChat = ({ patients = [], appointments = [] }) => {
         isError: true
       };
       setMessages(prev => [...prev, errorMessage]);
-      setError("Failed to get response");
+      setError(err.message || "Failed to get response");
     } finally {
       setIsLoading(false);
       setIsSending(false);

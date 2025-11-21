@@ -9,7 +9,7 @@ A complete, production-ready JavaScript web application for patient management w
 - **Express.js** backend with lowdb (local) or Supabase support
 - **Full CRUD** for patients, appointments, notes
 - **Modern UI** with dark mode, animations, accessibility
-- **Advanced features**: PDF export, voice recording, offline queue, pinning
+- **Advanced features**: PDF export, offline queue, pinning
 
 ---
 
@@ -52,7 +52,7 @@ doc-assist-js/
 │   │   ├── 📄 ConfirmDialog.jsx     (Delete confirmation with "DELETE" typing)
 │   │   ├── 📄 SearchBar.jsx         (Debounced search input)
 │   │   ├── 📄 ChartModal.jsx        (Vitals chart with CSV export)
-│   │   ├── 📄 VoiceRecorder.jsx     (Web Speech API recorder)
+│   │   ├── 📄 VoiceRecorder.jsx     (removed - voice features disabled)
 │   │   └── 📄 FloatingActionButton.jsx (Floating action button FAB)
 │   │
 │   ├── 📂 services/                 (API & data management)
@@ -102,6 +102,9 @@ doc-assist-js/
 - **ConfirmDialog.jsx**: Safety delete with "DELETE" typing
 - **VoiceRecorder.jsx**: Web Speech API integration
 - **ChartModal.jsx**: Chart.js time-series visualization
+ - **PatientFormModal.jsx**: Fully-spec'd form with validation
+ - **ConfirmDialog.jsx**: Safety delete with "DELETE" typing
+ - **ChartModal.jsx**: Chart.js time-series visualization
 
 ### API Integration
 - **services/api.js**: Axios instance with all endpoints pre-configured

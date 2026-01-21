@@ -327,10 +327,7 @@ Feel free to fork, improve, and submit pull requests!
 - [ ] Email notifications
 - [ ] Mobile app (React Native)
 
----
 
-**Happy coding! 🎉**
 
-For issues or questions, check the code comments marked with `TODO` and `FIXME`.
-#   D o c  
+
  

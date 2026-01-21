@@ -1,72 +1,105 @@
-# Doc Assist - Patient Management System
+# Doc Assist — Patient Management System
 
-A modern, full-stack web application for patient documentation, appointment scheduling, and medical notes management. Built with React, Vite, TailwindCSS, and Express.
+A modern full‑stack web application for patient documentation, appointment scheduling, and medical notes management. Built with React, Vite, TailwindCSS, and Express.
 
-## ✨ Features
+---
 
-- **📋 Patient Management**: Create, edit, delete, and search patients with rich profiles
-- **📅 Appointment Scheduling**: Schedule and manage appointments with conflict detection
-- **📝 Notes & Documentation**: Global and patient-specific note management with domains and tags
-- **📊 Dashboard**: Quick overview of stats, upcoming appointments, and quick actions
-- **📱 Responsive Design**: Works seamlessly on desktop, tablet, and mobile
-- **🎨 Dark Mode**: Full dark mode support with automatic detection
-- **⌨️ Keyboard Shortcuts**: Ctrl+K (search), N (new patient), ? (help)
-- **🎤 Voice Quick Add**: Web Speech API integration for voice-to-text notes
-- **📌 Pin Patients**: Pin frequently accessed patients to sidebar
-- **📥 Export PDF**: One-click PDF export for patient summaries
-- **💾 Offline Queue**: Actions created offline sync when reconnected
-- **🔒 Local First**: Data stored locally with optional Supabase integration
-- **📤 Backup/Restore**: Easy backup and restore of all data
+## Table of contents
 
-## 🚀 Quick Start
+- [Features](#features)
+- [Quick Start](#quick-start)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Run (development)](#run-development)
+- [Project Structure](#project-structure)
+- [Configuration](#configuration)
+  - [Environment variables](#environment-variables)
+  - [Supabase setup (optional)](#supabase-setup-optional)
+- [API Endpoints](#api-endpoints)
+- [Testing & QA Checklist](#testing--qa-checklist)
+- [Build & Deploy](#build--deploy)
+- [AI Integration (Symptom Analysis)](#ai-integration-symptom-analysis)
+- [Security Notes](#security-notes)
+- [Dependencies](#dependencies)
+- [Troubleshooting](#troubleshooting)
+- [License & Contributing](#license--contributing)
+- [Future Enhancements](#future-enhancements)
+
+---
+
+## Features
+
+- 📋 Patient management: Create, edit, delete, and search patients with rich profiles
+- 📅 Appointment scheduling with conflict detection
+- 📝 Notes & documentation: Global and patient-specific notes with domains and tags
+- 📊 Dashboard for stats, upcoming appointments, and quick actions
+- 📱 Responsive design for desktop, tablet, and mobile
+- 🎨 Dark mode with automatic detection
+- ⌨️ Keyboard shortcuts: Ctrl+K (search), N (new patient), ? (help)
+- 🎤 Voice quick-add via Web Speech API
+- 📌 Pin frequently accessed patients to the sidebar
+- 📥 Export PDF of patient summaries
+- 💾 Offline queue with automatic sync when reconnected
+- 🔒 Local-first storage with optional Supabase integration
+- 📤 Backup & restore functionality
+
+---
+
+## Quick Start
 
 ### Prerequisites
-- Node.js 16+ and npm (or yarn/pnpm)
+
+- Node.js 16+ and npm (or yarn / pnpm)
 - Git
 
 ### Installation
 
-1. **Clone or navigate to the project**:
+1. Clone the repository and navigate into it:
    ```bash
+   git clone <repo-url>
    cd doc-assist-js
    ```
 
-2. **Install dependencies**:
+2. Install dependencies:
    ```bash
    npm install
    cd server && npm install && cd ..
    ```
 
-3. **Copy environment variables**:
+3. Copy environment variables:
    ```bash
    cp .env.example .env
    ```
 
-4. **Start development servers** (frontend + backend concurrently):
-   ```bash
-   npm run dev
-   ```
+### Run (development)
 
-   The app will be available at `http://localhost:3000` and the API at `http://localhost:4000`.
+Start frontend and backend concurrently:
+```bash
+npm run dev
+```
+- Frontend: http://localhost:3000
+- API: http://localhost:4000
 
-### Alternative: Run separately
+Alternatively, run separately:
 
-**Frontend only**:
+Frontend only:
 ```bash
 npm run dev:frontend
 ```
 
-**Backend only**:
+Backend only:
 ```bash
 npm run dev:server
 ```
 
-## 📦 Project Structure
+---
+
+## Project Structure
 
 ```
 doc-assist-js/
 ├── src/
-│   ├── App.jsx              # Main app layout with routing
+│   ├── App.jsx              # Main app layout & routing
 │   ├── main.jsx             # React entry point
 │   ├── routes/              # Page components (Dashboard, Patients, etc.)
 │   ├── components/          # Reusable UI components
@@ -79,17 +112,19 @@ doc-assist-js/
 │   │   └── store.js         # lowdb data store
 │   ├── routes/              # API route handlers
 │   └── utils/               # PDF export utilities
-├── package.json             # Root dependencies
-├── vite.config.js           # Vite configuration
-├── tailwind.config.cjs      # TailwindCSS config
-└── README.md                # This file
+├── package.json
+├── vite.config.js
+├── tailwind.config.cjs
+└── README.md
 ```
 
-## 🔧 Configuration
+---
 
-### Environment Variables
+## Configuration
 
-Create a `.env` file (copy from `.env.example`):
+### Environment variables
+
+Copy `.env.example` to `.env` and update values:
 
 ```env
 # Frontend API base URL
@@ -103,13 +138,12 @@ SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_KEY=your-anon-public-key
 ```
 
-### Supabase Setup (Optional)
+### Supabase setup (optional)
 
 To use Supabase instead of local storage:
 
-1. Create a Supabase account at https://supabase.com
-2. Create a new project
-3. In the SQL Editor, run these commands to create tables:
+1. Create a Supabase account at https://supabase.com and create a new project.
+2. In the SQL editor, run:
 
 ```sql
 -- Patients table
@@ -144,147 +178,155 @@ CREATE TABLE notes (
 );
 ```
 
-4. Get your URL and anon key from Settings → API
-5. Update `.env` with your Supabase credentials and set `USE_SUPABASE=true`
+3. Retrieve your project URL and anon key from Settings → API and update `.env` with them. Set `USE_SUPABASE=true`.
 
-## 📖 API Endpoints
+---
 
-### Patients
-- `GET /api/patients` - Get all patients
-- `POST /api/patients` - Create patient
-- `GET /api/patients/:id` - Get patient details
-- `PUT /api/patients/:id` - Update patient
-- `DELETE /api/patients/:id` - Delete patient
-- `GET /api/patients/:id/notes` - Get patient notes
-- `POST /api/patients/:id/notes` - Add note
-- `GET /api/patients/:id/export` - Export PDF
+## API Endpoints
 
-### Appointments
-- `GET /api/appointments` - Get all appointments
-- `POST /api/appointments` - Create appointment (409 on conflict)
-- `PUT /api/appointments/:id` - Update appointment
-- `DELETE /api/appointments/:id` - Cancel appointment
+Patients:
+- GET /api/patients — Get all patients
+- POST /api/patients — Create patient
+- GET /api/patients/:id — Get patient details
+- PUT /api/patients/:id — Update patient
+- DELETE /api/patients/:id — Delete patient
+- GET /api/patients/:id/notes — Get patient notes
+- POST /api/patients/:id/notes — Add note
+- GET /api/patients/:id/export — Export PDF
 
-### Analysis
-- `POST /api/analysis/symptoms` - Analyze symptoms (stubbed, ready for AI integration)
+Appointments:
+- GET /api/appointments — Get all appointments
+- POST /api/appointments — Create appointment (409 returned on conflict)
+- PUT /api/appointments/:id — Update appointment
+- DELETE /api/appointments/:id — Cancel appointment
 
-### Misc
-- `GET /api/search?q=query` - Search patients
-- `GET /api/health` - Health check
+Analysis:
+- POST /api/analysis/symptoms — Analyze symptoms (stubbed for AI integration)
 
-## 🧪 Testing & QA Checklist
+Misc:
+- GET /api/search?q=query — Search patients
+- GET /api/health — Health check
 
-### Button Functionality
+---
 
-- [ ] **Add Patient**: Click FAB button on Patients page → Modal opens → Fill form → Save → Patient appears in list
-- [ ] **Edit Patient**: Click patient → Click Edit button → Modal pre-fills → Update fields → Save → Changes reflected
-- [ ] **Delete Patient**: Click patient → Click Delete → Confirm typing "DELETE" → Patient removed from list
-- [ ] **Add Note**: On patient detail → Type note → Select domain → Click "Add Note" → Note appears
-- [ ] **Export PDF**: On patient detail → Click "Export PDF" → Browser downloads PDF file
-- [ ] **Appointment Conflict**: Create appointment → Try creating another at same time/patient → 409 error shows
-- [ ] **Voice Quick Add**: Click 🎤 FAB → Grant microphone permission → Speak → Text appears → Confirm
-- [ ] **Pin Patient**: On patient card → Click pin icon → Patient moves to sidebar pinned section
-- [ ] **Search**: Type in search bar → Results appear → Click result → Navigate to patient
+## Testing & QA Checklist
 
-### UI & UX
+Button functionality
+- [ ] Add Patient: FAB → modal → fill form → save → patient appears
+- [ ] Edit Patient: open patient → edit → save → changes reflected
+- [ ] Delete Patient: confirm delete by typing "DELETE" → patient removed
+- [ ] Add Note: patient detail → add note → note appears
+- [ ] Export PDF: patient detail → click export → browser downloads PDF
+- [ ] Appointment Conflict: creating overlapping appointment returns 409
+- [ ] Voice Quick Add: grant mic permission → speak → verify text
+- [ ] Pin Patient: pin icon moves patient to pinned sidebar
+- [ ] Search: type in search → results appear → navigate to patient
 
-- [ ] Dark mode toggle works and persists
-- [ ] Sidebar collapses on mobile (< 1024px)
+UI & UX
+- [ ] Dark mode persists
+- [ ] Sidebar collapses on mobile (<1024px)
 - [ ] Cards have hover animations
-- [ ] Toast notifications appear for actions
-- [ ] Modals can be closed with Escape key
-- [ ] All buttons have accessible labels
-- [ ] Form validation shows error messages
-- [ ] Keyboard shortcuts work: Ctrl+K, N, ?
+- [ ] Toast notifications appear on actions
+- [ ] Modals close with Escape
+- [ ] Buttons have accessible labels
+- [ ] Form validation displays errors
+- [ ] Keyboard shortcuts: Ctrl+K, N, ?
 
-### Performance
-
+Performance
 - [ ] Offline queue stores actions when offline
-- [ ] Data syncs when reconnected
+- [ ] Data syncs on reconnect
 - [ ] LocalStorage/IndexedDB caches data
 - [ ] No console errors on page load
 
-## 🛠️ Build & Deploy
+---
 
-### Build for Production
+## Build & Deploy
+
+Build for production:
 ```bash
 npm run build
 ```
+Builds optimized frontend into `dist`.
 
-Builds optimized frontend to `dist/` folder.
-
-### Start Backend Only
+Start backend only:
 ```bash
 npm run dev:server
 # or
 cd server && npm start
 ```
 
-### Deploy to Vercel (Frontend)
+Deploy frontend to Vercel:
 ```bash
 npm install -g vercel
 vercel
 ```
 
-### Deploy to Render/Railway (Backend)
-1. Push code to GitHub
-2. Connect repository to Render/Railway
+Deploy backend (Render / Railway):
+1. Push repository to GitHub
+2. Connect to Render / Railway
 3. Set environment variables
 4. Deploy
 
-## 📝 AI Integration (Symptom Analysis)
+---
 
-The symptom analysis endpoint is currently stubbed. To enable real AI:
+## AI Integration (Symptom Analysis)
 
-### Option 1: OpenAI
+The symptom analysis endpoint is stubbed. Options to enable AI:
+
+Option 1 — OpenAI
 ```bash
 npm install openai
 ```
-
-In `server/routes/analysis.js`:
+Example usage (server/routes/analysis.js):
 ```javascript
-import { Configuration, OpenAIApi } from 'openai'
+import { Configuration, OpenAIApi } from 'openai';
 const openai = new OpenAIApi(new Configuration({
   apiKey: process.env.OPENAI_API_KEY
-}))
+}));
 
 // Call openai.createChatCompletion() with patient symptoms
 ```
 
-### Option 2: Google Generative AI
+Option 2 — Google Generative AI
 ```bash
 npm install @google/generative-ai
 ```
 
-### Option 3: Supabase Edge Functions
-Use Supabase's built-in Edge Functions for serverless processing.
+Option 3 — Supabase Edge Functions
+Use Supabase Edge Functions for serverless processing.
 
-## 🔐 Security Notes
+---
 
-- **Never commit `.env` files** - they contain sensitive keys
-- **API keys should be server-side only** - don't expose them to frontend
-- **Validate all inputs** on backend
-- **Use HTTPS in production**
-- **Sanitize user inputs** to prevent XSS
+## Security Notes
 
-## 📚 Dependencies
+- Never commit `.env` files.
+- Keep API keys server-side only; do not expose them in the frontend.
+- Validate all inputs on the backend.
+- Use HTTPS in production.
+- Sanitize user inputs to prevent XSS.
 
-### Frontend
-- `react@^18.2.0` - UI library
-- `react-router-dom@^6.12.0` - Client-side routing
-- `axios@^1.5.0` - HTTP client
-- `chart.js@^4.4.0` - Charts
-- `tailwindcss@^3.4.11` - Styling
+---
 
-### Backend
-- `express@^4.18.2` - Web server
-- `cors@^2.8.5` - CORS middleware
-- `lowdb@^3.0.0` - JSON database
-- `dotenv@^16.3.1` - Env variables
+## Dependencies
 
-## 🐛 Troubleshooting
+Frontend:
+- react@^18.2.0
+- react-router-dom@^6.12.0
+- axios@^1.5.0
+- chart.js@^4.4.0
+- tailwindcss@^3.4.11
 
-### Port 3000/4000 already in use
+Backend:
+- express@^4.18.2
+- cors@^2.8.5
+- lowdb@^3.0.0
+- dotenv@^16.3.1
+
+---
+
+## Troubleshooting
+
+Port 3000/4000 already in use:
 ```bash
 # Windows
 netstat -ano | findstr :3000
@@ -295,39 +337,36 @@ lsof -i :3000
 kill -9 <PID>
 ```
 
-### Module not found errors
+Module not found errors:
 ```bash
 rm -rf node_modules
 npm install
 ```
 
-### Vite HMR issues
-Check `vite.config.js` - ensure API proxy is correct.
+Vite HMR issues:
+- Verify `vite.config.js` and API proxy settings.
 
-### Database not persisting
-Check file permissions on `server/db/store.json` - ensure the server can write to it.
+Database not persisting:
+- Check file permissions on `server/db/store.json`.
 
-## 📄 License
+---
 
-MIT - Free to use for personal and commercial projects.
+## License & Contributing
 
-## 🤝 Contributing
+License: MIT — free to use for personal and commercial projects.
 
-Feel free to fork, improve, and submit pull requests!
+Contributing: Feel free to fork, improve, and submit pull requests. Provide clear PR descriptions and add tests where applicable.
 
-## 💡 Future Enhancements
+---
 
-- [ ] Real-time collaboration (WebSockets)
-- [ ] File attachments to patients
-- [ ] Prescription management
-- [ ] Lab results tracking
-- [ ] Insurance billing integration
-- [ ] Multi-language support
-- [ ] Advanced analytics dashboard
-- [ ] Email notifications
-- [ ] Mobile app (React Native)
+## Future Enhancements
 
-
-
-
- 
+- Real-time collaboration (WebSockets)
+- File attachments for patients
+- Prescription management
+- Lab results tracking
+- Insurance billing integration
+- Multi-language support
+- Advanced analytics dashboard
+- Email notifications
+- Mobile app (React Native)
